@@ -1,0 +1,92 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Dec 19 14:38:44 2018
+
+@author: Man
+"""
+
+#cargar datos
+import pandas as pd
+data = pd.read_csv("titanic3.csv")
+data.head()
+
+
+#otra forma
+mainpath = r'C:\Users\Man\Documents\Machine Learning\Phyton Machine Learning\python-ml-course-master\datasets'
+filename = r'\boston\Boston.csv'
+fullpath = mainpath + filename
+data2 = pd.read_csv(fullpath)
+data2.head()
+
+#bajar via URL
+medals_url = 'http://winterolympicsmedals.com/medals.csv'
+medals_data = pd.read_csv(medals_url)
+medals_data.head()
+
+#Cargar via excel
+mainpath2 = r'C:\Users\Man\Documents\Machine Learning\Phyton Machine Learning\python-ml-course-master\datasets'
+filename2 = r'\titanic\titanic3.xls'
+fullpath2 = mainpath2 + filename2
+titanic2 = pd.read_excel(fullpath2,'titanic3')
+titanic2.head()
+
+#convertir a Json
+titanic2.to_json(mainpath2 + r'\titanic\titanicjason2.json')
+
+#cosas utiles
+#ver ultimos
+data.tail(8)
+#ver forma de los datos
+data.shape
+#nombre de las columnas
+data.columns.values
+#estadisticas basica
+data.describe()
+#tipos de variables
+data.dtypes
+#Analisis de nulos
+pd.isnull(data["body"])
+#reemplazar valores flantante
+data3=data
+data3.fillna(0)
+#reemplazar nulos de un especifico
+data4=data
+data4["body"].fillna(0)
+#rellenar con medias
+data4["age"].fillna(data["age"].mean())
+
+#CREAR DUMMYS
+dummy_sex = pd.get_dummies(data["sex"],prefix="Sex")
+#meter la dummy a la data
+data = pd.concat([data,dummy_sex], axis=1)
+
+#PLOTS
+import pandas as pd
+mainpath3 = r'C:\Users\Man\Documents\Machine Learning\Phyton Machine Learning\python-ml-course-master\datasets'
+filename3 = r'\customer-churn-model\Customer Churn Model.txt'
+fullpath3 = mainpath3 + filename3
+datap = pd.read_csv(fullpath3)
+datap.head()
+import matplotlib as mpl
+mpl.get_backend()
+datap.plot(kind="scatter",x="Day Mins", y="Day Charge")
+datap.plot(kind="scatter",x="Night Mins", y="Night Charge")
+
+#varias graficas
+import matplotlib.pyplot as plt
+figure, axs= plt.subplots(2,2)
+datap.plot(kind="scatter",x="Day Mins", y="Day Charge",ax=axs[0][0])
+datap.plot(kind="scatter",x="Night Mins", y="Night Charge",ax=axs[0][1])
+datap.plot(kind="scatter",x="Day Calls", y="Day Charge",ax=axs[1][0])
+datap.plot(kind="scatter",x="Night Calls", y="Night Charge",ax=axs[1][1])
+
+#Histogramas
+plt.hist(datap["Day Calls"], bins=20)
+plt.xlabel("numero de llamadas al dia")
+plt.ylabel("frecuencia")
+plt.title("histograma de llamadas")
+
+#Boxplot
+plt.boxplot(datap["Day Calls"])
+plt.ylabel("llamadas diarias")
+
